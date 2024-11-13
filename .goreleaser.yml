@@ -28,11 +28,7 @@ checksum:
   extra_files:
     - glob: ./dist/raw/*
 signs:
-  - cmd: cosign
-    signature: '${artifact}.keyless.sig'
-    certificate: '${artifact}.pem'
-    output: true
-    artifacts: checksum
+  - artifacts: checksum
     args:
       - sign-blob
       - '--output-certificate=${certificate}'
