@@ -1,6 +1,5 @@
 # This is an example goreleaser.yaml file with some sane defaults.
 # Make sure to check the documentation at http://goreleaser.com
-version: 2
 env:
   - CGO_ENABLED=0
 builds:
@@ -28,5 +27,21 @@ checksum:
   extra_files:
     - glob: ./dist/raw/*
 signs:
-  - artifacts: checksum
-    args: ["--batch", "-u", "{{ .Env.GPG_FINGERPRINT }}", "--output", "${signature}", "--detach-sign", "${artifact}"]
+  - cmd: cosign
+    signature: '${artifact}.keyless.sig'
+    certificate: '${artifact}.pem'
+    output: true
+    artifacts: checksum
+    args:
+      - sign-blob
+      - '--output-certificate=${certificate}'
+      - '--output-signature=${signature}'
+      - '${artifact}'
+      - --yes
+release:
+  github:
+    owner: afrataiza
+    name: tflint-ruleset-datadog
+  draft: true
+snapshot:
+  name_template: "{{ .Tag }}-dev"
