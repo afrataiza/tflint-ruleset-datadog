@@ -44,5 +44,3 @@ release:
     owner: afrataiza
     name: tflint-ruleset-datadog
   draft: true
-snapshot:
-  name_template: "{{ .Tag }}-dev"
