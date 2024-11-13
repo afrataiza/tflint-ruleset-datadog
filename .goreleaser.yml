@@ -27,14 +27,6 @@ checksum:
   name_template: 'checksums.txt'
   extra_files:
     - glob: ./dist/raw/*
-signs:
-  - artifacts: checksum
-    args:
-      - sign-blob
-      - '--output-certificate=${certificate}'
-      - '--output-signature=${signature}'
-      - '${artifact}'
-      - --yes
 release:
   github:
     owner: afrataiza
